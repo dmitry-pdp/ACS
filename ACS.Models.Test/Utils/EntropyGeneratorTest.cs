@@ -7,7 +7,7 @@
     public class EntropyGeneratorTest
     {
         [TestMethod]
-        public void DecayTest()
+        public void EntropyGenerator_Decay_WithDecayMax_ComputeDecayValue()
         {
             var fakeRandomGenerator = new FakeRandomGenerator();
             EntropyGenerator.Initialize(fakeRandomGenerator);
@@ -20,7 +20,7 @@
         }
 
         [TestMethod]
-        public void NextRandomTest()
+        public void EntropyGenerator_WithNextRandom_ComputeValidDecay()
         {
             EntropyGenerator.Initialize(new RandomizerImpl());
             var decay = EntropyGenerator.Decay(100);

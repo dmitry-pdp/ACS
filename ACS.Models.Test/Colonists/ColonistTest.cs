@@ -1,4 +1,4 @@
-﻿namespace ACS.Models.Test.Colonists
+﻿namespace ACS.Models.Test
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Model;
@@ -17,7 +17,7 @@
         }
 
         [TestMethod]
-        public void Constructor_WithConstructionConfig_AgeAssigned()
+        public void Colonist_Constructor_WithConstructionConfig_AgeAssigned()
         {
             byte startAge = (byte)(new Random().Next(100));
             var config = new ColonyConfig
@@ -30,7 +30,7 @@
         }
 
         [TestMethod]
-        public void Constructor_WithConstructionConfig_AttributesInitialized()
+        public void Colonist_Constructor_WithConstructionConfig_AttributesInitialized()
         {
             ushort maxAttributeValue = (ushort)(new Random().Next(100));
 
@@ -48,14 +48,14 @@
         }
 
         [TestMethod]
-        public void Constructor_WithConstructionConfig_StateInitialized()
+        public void Colonist_Constructor_WithConstructionConfig_StateInitialized()
         {
             var colonist = new Colonist(new ColonyConfig());
             Assert.AreEqual(ColonistState.Resting, colonist.State, "Colonist must be in resting state once created.");
         }
 
         [TestMethod]
-        public void ProcessColonistState_WithDecayFromConfig_AttributesDecreased()
+        public void Colonist_ProcessColonistState_WithDecayFromConfig_AttributesDecreased()
         {
             ushort maxAttributeValue = 1000;
             ushort baseAttributeDecay = (ushort)(new Random().Next(100));

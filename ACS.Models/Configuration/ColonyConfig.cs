@@ -6,9 +6,8 @@
         public ushort MaxAttributeValue;
         public ushort BaseAttributeDecay;
         public ushort BaseAttributeDecayDeviation;
-        public byte MinWorkingAge;
-        public byte MaxWorkingAge;
-        public byte MinBreedingAge;
-        public byte MaxBreedingAge;
+
+        public RangeConstraint<ushort> WorkingAge;
+        public RangeConstraint<ushort> BreedingAge;
     }
 }

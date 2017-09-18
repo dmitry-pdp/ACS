@@ -4,6 +4,8 @@
      * Only people 
      */
 
+    using System.Linq;
+
     public class LivingQuartersModule : ColonyModule
     {
         public ushort BonusFertility;
@@ -20,14 +22,8 @@
                 return;
             }
 
-            foreach (var worker in this.Workers)
+            foreach (var worker in this.Workers.Where(w => this.config.BreedingAge.InRange(w.Age)))
             {
-                if (worker.Age > this.config.MaxBreedingAge || worker.Age < this.config.MinBreedingAge)
-                {
-                    continue;
-                }
-
-
             }
         }
     }

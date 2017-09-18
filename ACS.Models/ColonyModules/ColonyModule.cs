@@ -4,9 +4,10 @@ namespace ACS.Model
     /* Colony modules are responsible for colony grows and resource production.
      * Every module has traits which benefits its yield if worker is assigned to this module.
      * Trait modifiers are in thousands of unit of production.
-     */ 
+     */
 
     using System.Collections.Generic;
+    using System.Linq;
 
     public abstract class ColonyModule
     {
@@ -33,14 +34,8 @@ namespace ACS.Model
             int totalWorkerCount = this.Workers.Count;
             var traitsDistribution = new Dictionary<ColonistTrait, ushort>();
 
-            for(int i = 0; i < totalWorkerCount; i++)
+            foreach(var worker in this.Workers.Where(w => config.WorkingAge.InRange(w.Age)))
             {
-                var worker = this.Workers[i];
-                if (worker.Age > this.config.MaxWorkingAge || worker.Age < this.config.MinWorkingAge)
-                {
-                    continue;
-                }
-
                 if (worker.Traits == null || worker.Traits.Length == 0)
                 {
                     continue;
@@ -59,7 +54,7 @@ namespace ACS.Model
             float modifier = 0.0f;
             foreach(var trait in traitsDistribution)
             {
-                ushort coefficient = this.TraitsModifiers.TryGetValue(trait.Key, out coefficient) ? coefficient : (ushort)0;
+                ushort coefficient = this.TraitsModifiers[trait.Key];
                 modifier += trait.Value * coefficient / 1000.0f;
             }
 

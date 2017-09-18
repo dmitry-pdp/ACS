@@ -40,12 +40,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Colonist.cs" />
-    <Compile Include="Models\ColonistConfig.cs" />
-    <Compile Include="Models\ColonistState.cs" />
-    <Compile Include="Models\ColonistTrait.cs" />
-    <Compile Include="Models\Colony.cs" />
-    <Compile Include="Models\EntropyGenerator.cs" />
+    <Compile Include="Colonists\Colonist.cs" />
+    <Compile Include="ColonyModules\ColonyProductionInfo.cs" />
+    <Compile Include="ColonyModules\ResourceMineModule.cs" />
+    <Compile Include="Configuration\ColonyConfig.cs" />
+    <Compile Include="Colonists\ColonistState.cs" />
+    <Compile Include="Colonists\ColonistTrait.cs" />
+    <Compile Include="Colony\Colony.cs" />
+    <Compile Include="ColonyModules\ColonyModule.cs" />
+    <Compile Include="Utils\EntropyGenerator.cs" />
+    <Compile Include="ColonyModules\LivingQuartersModule.cs" />
+    <Compile Include="ColonyModules\ResourceType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

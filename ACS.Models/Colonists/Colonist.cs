@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace ACS.Models.Models
+﻿namespace ACS.Model
 {
+    using System;
+
     public class Colonist
     {
         public byte Age;
@@ -13,9 +13,9 @@ namespace ACS.Models.Models
         public ColonistTrait[] Traits;
         public ColonistState State;
 
-        private ColonistConfig config;
+        private ColonyConfig config;
 
-        public Colonist(ColonistConfig config)
+        public Colonist(ColonyConfig config)
         {
             this.config = config;
             this.Age = config.StartAge;
@@ -29,20 +29,19 @@ namespace ACS.Models.Models
 
         public void ProcessColonistState()
         {
-            this.Age += 1;
+            this.Age++;
             this.Energy = this.DecayAttribute(this.Energy);
-            this.Hunger -= this.DecayAttribute(this.Hunger);
-            this.Health -= this.DecayAttribute(this.Health);
-            this.Social -= this.DecayAttribute(this.Social);
-            this.Entertainment -= this.DecayAttribute(this.Entertainment);
-        }   
+            this.Hunger = this.DecayAttribute(this.Hunger);
+            this.Health = this.DecayAttribute(this.Health);
+            this.Social = this.DecayAttribute(this.Social);
+            this.Entertainment = this.DecayAttribute(this.Entertainment);
+        }
         
         private ushort DecayAttribute(ushort attributeValue)
         {
             var decay = this.config.BaseAttributeDecay + EntropyGenerator.Decay(this.config.BaseAttributeDecayDeviation);
             var newAttributeValue = attributeValue - decay;
             return Convert.ToUInt16(Math.Max(0, newAttributeValue));
-                
-        }     
+        }
     }
 }

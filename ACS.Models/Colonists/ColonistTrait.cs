@@ -1,4 +1,4 @@
-﻿namespace ACS.Models.Models
+﻿namespace ACS.Model
 {
     public enum ColonistTrait: byte
     {

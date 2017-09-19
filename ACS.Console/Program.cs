@@ -9,8 +9,7 @@
             var config = new ColonyConfig
             {
                 StartAge = 0,
-                MaxAttributeValue = 10000,
-                BaseAttributeDecay = 100
+                MaxAttributeValue = 10000
             };
 
             var colony = new Colony();

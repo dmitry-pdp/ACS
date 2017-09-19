@@ -40,11 +40,12 @@
             };
 
             var colonist = new Colonist(config);
-            Assert.AreEqual(maxAttributeValue, colonist.Energy, "colonist.Energy is not assigned properly.");
-            Assert.AreEqual(maxAttributeValue, colonist.Hunger, "colonist.Hunger is not assigned properly.");
-            Assert.AreEqual(maxAttributeValue, colonist.Health, "colonist.Health is not assigned properly.");
-            Assert.AreEqual(maxAttributeValue, colonist.Social, "colonist.Social is not assigned properly.");
-            Assert.AreEqual(maxAttributeValue, colonist.Entertainment, "colonist.Entertainment is not assigned properly.");
+
+            Assert.AreEqual(maxAttributeValue, colonist.Attributes[ColonistAttributeType.Energy].Value, "colonist.Energy is not assigned properly.");
+            Assert.AreEqual(maxAttributeValue, colonist.Attributes[ColonistAttributeType.Hunger].Value, "colonist.Hunger is not assigned properly.");
+            Assert.AreEqual(maxAttributeValue, colonist.Attributes[ColonistAttributeType.Health].Value, "colonist.Health is not assigned properly.");
+            Assert.AreEqual(maxAttributeValue, colonist.Attributes[ColonistAttributeType.Social].Value, "colonist.Social is not assigned properly.");
+            Assert.AreEqual(maxAttributeValue, colonist.Attributes[ColonistAttributeType.Entertainment].Value, "colonist.Entertainment is not assigned properly.");
         }
 
         [TestMethod]
@@ -55,7 +56,7 @@
         }
 
         [TestMethod]
-        public void Colonist_ProcessColonistState_WithDecayFromConfig_AttributesDecreased()
+        public void Colonist_DecayAttributes_WithDecayData_AttributesDecreased()
         {
             ushort maxAttributeValue = 1000;
             ushort baseAttributeDecay = (ushort)(new Random().Next(100));
@@ -65,20 +66,30 @@
 
             var colonist = new Colonist(new ColonyConfig
             {
-                MaxAttributeValue = maxAttributeValue,
-                BaseAttributeDecay = baseAttributeDecay,
-                BaseAttributeDecayDeviation = baseAttributeDecayDeviation
+                MaxAttributeValue = maxAttributeValue
             });
 
-            colonist.ProcessColonistState();
+            var decayConfig = new WorkerAttributeDecay
+            {
+                {
+                    ColonistAttributeType.Energy, new WorkerAttributeDecayItem
+                    {
+                        Type = ColonistAttributeType.Energy,
+                        BaseDecay = baseAttributeDecay,
+                        DecayDeviation = baseAttributeDecayDeviation
+                    }
+                }
+            };
+
+            colonist.DecayAttributes(decayConfig);
 
             var attributeNewValue = maxAttributeValue - (baseAttributeDecay + (baseAttributeDecayDeviation / 2 - baseAttributeDecayDeviation));
 
-            Assert.AreEqual(attributeNewValue, colonist.Energy, "colonist.Energy is not decayed properly.");
-            Assert.AreEqual(attributeNewValue, colonist.Hunger, "colonist.Hunger is not decayed properly.");
-            Assert.AreEqual(attributeNewValue, colonist.Health, "colonist.Health is not decayed properly.");
-            Assert.AreEqual(attributeNewValue, colonist.Social, "colonist.Social is not decayed properly.");
-            Assert.AreEqual(attributeNewValue, colonist.Entertainment, "colonist.Entertainment is not decayed properly.");
+            Assert.AreEqual(attributeNewValue, colonist.Attributes[ColonistAttributeType.Energy].Value, "colonist.Energy is not decayed properly.");
+            Assert.AreEqual(maxAttributeValue, colonist.Attributes[ColonistAttributeType.Hunger].Value, "colonist.Hunger is not decayed properly.");
+            Assert.AreEqual(maxAttributeValue, colonist.Attributes[ColonistAttributeType.Health].Value, "colonist.Health is not decayed properly.");
+            Assert.AreEqual(maxAttributeValue, colonist.Attributes[ColonistAttributeType.Social].Value, "colonist.Social is not decayed properly.");
+            Assert.AreEqual(maxAttributeValue, colonist.Attributes[ColonistAttributeType.Entertainment].Value, "colonist.Entertainment is not decayed properly.");
         }
     }
 }

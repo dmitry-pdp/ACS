@@ -41,7 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Colonists\Colonist.cs" />
+    <Compile Include="Colonists\ColonistAttribute.cs" />
+    <Compile Include="Colonists\WorkerAttributeDecay.cs" />
     <Compile Include="ColonyModules\ColonyProductionInfo.cs" />
+    <Compile Include="ColonyModules\PowerGeneratorColonyModule.cs" />
     <Compile Include="ColonyModules\ResourceMineModule.cs" />
     <Compile Include="Configuration\ColonyConfig.cs" />
     <Compile Include="Colonists\ColonistState.cs" />

@@ -1,15 +1,13 @@
 ﻿namespace ACS.Model
 {
     using System;
+    using System.Collections.Generic;
 
     public class Colonist
     {
         public byte Age;
-        public ushort Energy;
-        public ushort Hunger;
-        public ushort Health;
-        public ushort Social;
-        public ushort Entertainment;
+
+        public Dictionary<ColonistAttributeType, ColonistAttribute> Attributes;
         public ColonistTrait[] Traits;
         public ColonistState State;
 
@@ -19,14 +17,20 @@
         {
             this.config = config;
             this.Age = config.StartAge;
-            this.Energy = config.MaxAttributeValue;
-            this.Hunger = config.MaxAttributeValue;
-            this.Health = config.MaxAttributeValue;
-            this.Social = config.MaxAttributeValue;
-            this.Entertainment = config.MaxAttributeValue;
+            this.Attributes = new Dictionary<ColonistAttributeType, ColonistAttribute>
+            {
+                { ColonistAttributeType.Energy, new ColonistAttribute(ColonistAttributeType.Energy, config.MaxAttributeValue, config.MaxAttributeValue) },
+                { ColonistAttributeType.Hunger, new ColonistAttribute(ColonistAttributeType.Hunger, config.MaxAttributeValue, config.MaxAttributeValue) },
+                { ColonistAttributeType.Health, new ColonistAttribute(ColonistAttributeType.Health, config.MaxAttributeValue, config.MaxAttributeValue) },
+                { ColonistAttributeType.Social, new ColonistAttribute(ColonistAttributeType.Social, config.MaxAttributeValue, config.MaxAttributeValue) },
+                { ColonistAttributeType.Entertainment, new ColonistAttribute(ColonistAttributeType.Entertainment, config.MaxAttributeValue, config.MaxAttributeValue) }
+            };
+
             this.State = ColonistState.Resting;
         }
 
+        /*
+        TODO: all attributes decay happening in the colony modules.
         public void ProcessColonistState()
         {
             this.Age++;
@@ -36,12 +40,23 @@
             this.Social = this.DecayAttribute(this.Social);
             this.Entertainment = this.DecayAttribute(this.Entertainment);
         }
-        
-        private ushort DecayAttribute(ushort attributeValue)
+        */
+
+        public void DecayAttributes(WorkerAttributeDecay attributeDecayData)
         {
-            var decay = this.config.BaseAttributeDecay + EntropyGenerator.Decay(this.config.BaseAttributeDecayDeviation);
-            var newAttributeValue = attributeValue - decay;
-            return Convert.ToUInt16(Math.Max(0, newAttributeValue));
+            if (attributeDecayData == null || attributeDecayData.Count == 0)
+            {
+                return;
+            }
+
+            foreach(var decayItem in attributeDecayData)
+            {
+                var attribute = this.Attributes[decayItem.Key];
+                var decay = decayItem.Value.BaseDecay + EntropyGenerator.Decay(decayItem.Value.DecayDeviation);
+                var newAttributeValue = attribute.Value - decay;
+                attribute.Value = Convert.ToUInt16(Math.Max(0, newAttributeValue));
+                this.Attributes[decayItem.Key] = attribute;
+            }
         }
     }
 }

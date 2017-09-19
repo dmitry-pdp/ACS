@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Colonists\ColonistTest.cs" />
     <Compile Include="ColonyModule\ColonyModuleTest.cs" />
+    <Compile Include="ColonyModule\PowerGeneratorColonyModuleTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\EntropyGeneratorTest.cs" />
     <Compile Include="Utils\FakeRandomGenerator.cs" />

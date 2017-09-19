@@ -24,15 +24,15 @@
         {
             // Produce energy
 
-            var workerCount = this.GetWorkersWithinAge(this.config.WorkingAge).Count();
-            var workerModifier = this.config.PowerGeneratorColonyModule_WorkerModifier * workerCount / (this.Capacity * 1000.0f);
+            var workers = this.GetWorkersWithinAge(this.config.WorkingAge).ToList();
+            var workerModifier = this.config.PowerGeneratorColonyModule_WorkerModifier * workers.Count / (this.Capacity * 1000.0f);
             var traitsModifier = this.GetWorkerProductionModifier();
             var powerProduced =  this.PowerProduced * (1.0f + workerModifier + traitsModifier);
             production.Add(this, ResourceType.Energy, powerProduced);
 
             // Decay workers attributes
 
-            this.Workers.ForEach(worker => worker.DecayAttributes(this.WorkerAttributeDecayData));
+            workers.ForEach(worker => worker.DecayAttributes(this.WorkerAttributeDecayData));
         }
     }
 }

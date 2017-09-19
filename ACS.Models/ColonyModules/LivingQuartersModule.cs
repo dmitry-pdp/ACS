@@ -18,10 +18,18 @@
 
         public override void Process(Colony colony, ColonyProductionInfo production)
         {
-            var powerAvailable = colony.GetPower(this);
+            var powerAvailable = (float)colony.GetPower(this);
+            var powerEffeciencyModifier = powerAvailable / this.PowerRequired;
 
-            foreach (var worker in this.GetWorkersWithinAge(this.config.BreedingAge))
+            // Decay attributes for all colonists
+
+            this.Workers.ForEach(colonist => colonist.DecayAttributes(this.WorkerAttributeDecayData));
+
+            // Breed colonists
+
+            foreach (var colonist in this.GetWorkersWithinAge(this.config.BreedingAge))
             {
+
             }
         }
     }

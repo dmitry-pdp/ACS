@@ -53,8 +53,8 @@
             {
                 var attribute = this.Attributes[decayItem.Key];
                 var decay = decayItem.Value.BaseDecay + EntropyGenerator.Decay(decayItem.Value.DecayDeviation);
-                var newAttributeValue = attribute.Value - decay;
-                attribute.Value = Convert.ToUInt16(Math.Max(0, newAttributeValue));
+                var newAttributeValue = (int)attribute.Value - (decayItem.Value.IsReverse ? -decay : decay);
+                attribute.Value = Convert.ToUInt16(Math.Min(attribute.MaxValue, Math.Max(0, newAttributeValue)));
                 this.Attributes[decayItem.Key] = attribute;
             }
         }

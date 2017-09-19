@@ -7,6 +7,7 @@
         public ColonistAttributeType Type;
         public ushort BaseDecay;
         public ushort DecayDeviation;
+        public bool IsReverse;
     }
 
     public class WorkerAttributeDecay : Dictionary<ColonistAttributeType, WorkerAttributeDecayItem>
